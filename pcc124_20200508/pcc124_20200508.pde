@@ -11,15 +11,16 @@ void draw() {
 
   strokeWeight(12);
 
-  for ( int i = 0; i < 18; i++ ) {
-    if ( i == 15 ) {
-      stroke(249, 241, 236);
-      fill(189, 53, 41);
+  for ( int i = 0; i < 22; i++ ) {
+    if ( random(4) < 1 ) {
+      stroke(249, 241, 236, 240);
+      fill(189, 53, 41, 240);
+      circle(random(width), random(height), random(120, 240));
     } else {
-      stroke(161, 168, 156);
-      fill(65, 92, 126);
+      stroke(161, 168, 156, 200);
+      fill(65, 92, 126, 160);
+      circle(random(width), random(height), random(200, 860));
     }
-    circle(random(width), random(height), random(120, 400));
   }
 }
 
