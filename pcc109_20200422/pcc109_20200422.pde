@@ -9,10 +9,28 @@ void setup() {
 
 void draw() {
   background(200);
-  
-  for ( int i = 0; i < 40; i++ ) {
+
+  figure();
+  for ( int i = 0; i < 30; i++ ) {
     clock();
   }
+}
+
+
+void figure() {
+
+  final String s = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTVWXYZ0123456789";
+
+  for ( int i = 0; i < 1000; i++ ) {
+    pushMatrix();
+    translate(random(width), random(height));
+    rotate(random(-PI, PI));
+    fill(random(255), random(100, 200));
+    textSize(random(8, 64));
+    text(s.charAt((int)random(s.length())), 0, 0);
+    popMatrix();
+  }
+  return ;
 }
 
 
@@ -34,7 +52,7 @@ void clock() {
     major = minor;
     minor = tmp;
   }
-  
+
   // shadow
   noStroke();
   fill(100, 80);
