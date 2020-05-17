@@ -16,22 +16,22 @@ void draw() {
 void disk(float w, float h, float l) {
 
   if ( l > 50 && random(10) < 7 ) {
-    disk(w, h, l/2);
-    disk(w+l/2, h, l/2);
-    disk(w, h+l/2, l/2);
+    disk(    w,     h, l/2);
+    disk(w+l/2,     h, l/2);
+    disk(    w, h+l/2, l/2);
     disk(w+l/2, h+l/2, l/2);
     return ;
   }
 
   final color[] cs = {
-    color(216, 65, 145), 
+    color(216,  65, 145), 
     color(214, 139, 185), 
     color(235, 109, 154), 
     color(251, 230, 239), 
     color(174, 128, 126), 
     color(193, 216, 128), 
-    color(150, 200, 85), 
-    color(145, 164, 78)
+    color(150, 200,  85), 
+    color(145, 164,  78)
   };
 
   int idx, n;
