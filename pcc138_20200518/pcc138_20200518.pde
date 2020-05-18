@@ -10,14 +10,15 @@ void setup() {
 
 void draw() {
   background(211, 210, 191);
+  
   for ( int i = 0; i < 2; i++ ) {
-    releaseSnake(color(217, 117, 86));
+    releaseSnake(color(217, 117,  86));
     releaseSnake(color(224, 140, 122));
-    releaseSnake(color(241, 173, 95));
+    releaseSnake(color(241, 173,  95));
   }
   releaseSnake(color(225, 198, 192));
   releaseSnake(color(149, 155, 169));
-  releaseSnake(color(62, 87, 112));
+  releaseSnake(color( 62,  87, 112));
 }
 
 
