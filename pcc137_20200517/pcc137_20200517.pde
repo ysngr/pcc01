@@ -1,11 +1,10 @@
 /* 137_20200517 */
 
 void setup() {
-  size(1150, 800);
+  size(1000, 1000);
   noLoop();
   textAlign(CENTER, CENTER);
   textFont(createFont("HGS教科書体", 16));
-  blendMode(DIFFERENCE);
 }
 
 
@@ -18,17 +17,19 @@ void draw() {
     "夜久毛多都伊豆毛夜幣賀岐都麻碁微爾夜幣賀岐都久流曾能夜幣賀岐袁", 
   };
   final color c = color(0, 200, 160);
+  final float FS = 42;
 
   float c1x, c1y, c2x, c2y;
   float[][] hs;
+  int idx;
 
-  for ( String s : ss ) {
-    for ( int i = 0; i < s.length(); i++ ) {
-      for ( int j = 0; j < 3; j++ ) {
-        fill(c, random(60, 140));
-        textSize(random(16, 94));
-        text(s.charAt(i), random(width), random(height));
-      }
+  blendMode(DIFFERENCE);
+  textSize(FS);
+  for ( float h = FS/2; h < height; h += FS ) {
+    for ( float w = FS/2; w < width; w += FS ) {
+      fill(c, random(60, 140));
+      idx = (int)random(ss.length);
+      text(ss[idx].charAt((int)random(ss[idx].length())), w, h);
     }
   }
 
@@ -64,6 +65,13 @@ void draw() {
       }
     }
   }
+
+  /* frame */
+  blendMode(BLEND);
+  strokeWeight(60);
+  stroke(220, 184, 135);
+  noFill();
+  rect(0, 0, width, height);
 }
 
 
