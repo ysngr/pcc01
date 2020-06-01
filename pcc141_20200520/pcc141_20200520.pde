@@ -3,57 +3,74 @@
 void setup() {
   size(1150, 800);
   noLoop();
-  noStroke();
 }
 
 
 void draw() {
   background(202, 204, 210);
-  for ( int i = 0; i < 24; i++ ) {
-    putBall();
+  for ( int i = 0; i < 18; i++ ) {
+    decCircle();
+  }
+  for ( int i = 0; i < 6; i++ ) {
+    candy();
   }
 }
 
 
 void selectColor() {
 
-  color f;
+  final color[] cs = {
+    color(131, 154, 92), 
+    color( 75,  45, 22), 
+    color( 49, 103, 63), 
+    color(114, 175, 45), 
+    color(183, 203, 60)
+  };
 
-  switch( (int)random(5) ) {
-    case 0 : f = color(131, 154,  92); break;
-    case 1 : f = color( 75,  45,  22); break;
-    case 2 : f = color( 49, 103,  63); break;
-    case 3 : f = color(199, 177, 131); break;
-    case 4 : f = color(114, 175,  45); break;
-    default : f = color(183, 203,  60); break;
-  }
-
-  fill(f, 10);
+  noStroke();
+  fill(cs[(int)random(cs.length)], 8);
 
   return ;
 }
 
 
-void putBall() {
+void candy() {
 
-  float cx, cy, cl, x, y, l;
-  int n;
+  float x = random(width);
+  float y = random(height);
+  float r = random(60, 180);
+  float mr = random(10, r/4);
+  float dr, t, ts;
 
   selectColor();
 
-  cx = random(width);
-  cy = random(height);
-  cl = random(60, 180);
-  x = cx;
-  y = cy;
-  l = cl;
-  n = (int)map(l, 80, 600, 20, 120);
+  t = random(-PI, PI);
+  ts = ( random(2) < 1 )? 1.0 : -1.0;
+  while ( r > mr ) {
+    dr = random(1, 4);
+    t += ts * random(PI/24, PI/6);
+    r -= dr;
+    x += dr*cos(t);
+    y += dr*sin(t);
+    circle(x, y, 2*r);
+  }
 
-  for ( int i = 0; i < n; i++ ) {
-    x += random(-8, 8);
-    y += random(-8, 8);
-    l = cl - dist(cx, cy, x, y);
-    circle(x, y, 2*l);
+  return ;
+}
+
+
+void decCircle() {
+
+  float x = random(width);
+  float y = random(height);
+  float r = random(80, 220);
+  float mr = random(10, r/4);
+
+  selectColor();
+
+  while ( r > mr ) {
+    circle(x, y, 2*r);
+    r -= random(1, 3);
   }
 
   return ;
