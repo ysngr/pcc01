@@ -8,39 +8,67 @@ final color[][] cs = {
   {color(250,  87,  70), color(251, 100,  79)}
 };
 
+final color[] ics = {
+  color( 98, 229, 215), 
+  color(156, 186,  96), 
+  color(158, 221, 230), 
+  color(247, 234, 129), 
+  color( 24,  49, 133), 
+  color(130, 109, 230)
+};
+
 
 void setup() {
   size(1000, 1000);
   noLoop();
-  blendMode(MULTIPLY);
 }
 
 
 void draw() {
-  background(255, 235, 235);
+  background(255);
   translate(width/2, height/2);
+  
+  fback();
+
+  for ( int i = 0; i < ics.length; i++ ) {
+    shole(random(-width/2, width/2), random(-height/2, height/2), random(100, 400), ics[i], random(120, 180));
+  }
 
   float r, t, nt, d;
-
-  t = random(-PI, PI);
-  for ( int i = 0; i < 5; i++ ) {
-    for ( int j = 0; j < 18; j++ ) {
-      r = random(160, 420);
-      d = random(80, 160);
+  t = 0;
+  for ( int i = 0; i < cs.length; i++ ) {
+    for ( int j = 0; j < random(3, 5); j++ ) {
+      r = random(200, 540);
+      d = random(80, 550);
       nt = random(-1, 1) * PI/8;
-      hs(r*cos(t+nt), r*sin(t+nt), d, cs[i][(int)random(cs[i].length)], random(30, 70));
+      hole(r*cos(t+nt), r*sin(t+nt), d, cs[i][(int)random(cs[i].length)], random(80, 120));
+      t += random(TWO_PI/12, TWO_PI/4);
     }
-    t += TWO_PI / 5;
   }
 }
 
 
-void hs(float x, float y, float d, color c, float a) {
-  if ( random(2) < 1 ) {
-    hole(x, y, d, c, a);
-  } else {
-    shole(x, y, d, c, a);
+void fback() {
+
+  final float dt = TWO_PI / 5;
+
+  noStroke();
+
+  float a;
+  int i = 0;
+  for ( float t = 0; t < TWO_PI; t += dt ) {
+    a = 255;
+    for ( float r = 0; r < 520; r++ ) {
+      fill(cs[i][(int)random(cs[i].length)], a);
+      circle(width/2, 0, 2*r);
+      r += random(2);
+      a -= random(2);
+    }
+    i++;
+    rotate(dt);
   }
+
+  return ;
 }
 
 
