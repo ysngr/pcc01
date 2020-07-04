@@ -8,11 +8,11 @@ void setup() {
 
 
 void draw() {
-  background(50);
+  background(40);
   aurora();
   rstars(3800);
   milkyway();
-  rwindsocks();
+  rwindsocks(7);
 }
 
 
@@ -21,8 +21,8 @@ void aurora() {
   for ( float h = 0; h < height; h++ ) {
     for ( float w = 0; w < width; w++ ) {
       stroke(
-        noise(w/200, h/300) * 120, 
-        noise(w/300, h/200) * 140, 
+        noise(w/200, h/300) * 160, 
+        noise(w/300, h/200) * 160, 
         random(120, 200)
       );
       point(w, h);
@@ -46,7 +46,7 @@ void rstars(int n) {
 void star(float x, float y) {
 
   final color[] cs = {
-    color(248, 181, 0), 
+    color(248, 181,   0), 
     color(238, 235, 221), 
     color(234, 235, 229), 
     color(244, 246, 241)
@@ -76,7 +76,17 @@ void milkyway() {
 }
 
 
-void rwindsocks() {
+void rwindsocks(int n) {
+
+  for ( int i = 0; i < n; i++ ) {
+    windsock(random(width), random(height), random(120, 160));
+  }
+
+  return ;
+}
+
+
+void windsock(float x, float y, float d) {
 
   final color[] cs = {
     color(234,  85,  75), 
@@ -87,27 +97,18 @@ void rwindsocks() {
     color(175,  98, 154)
   };
 
-  for ( color c : cs ) {
-    windsock(random(width), random(height), random(150, 220), c);
-  }
-
-  return ;
-}
-
-
-void windsock(float x, float y, float d, color c) {
-
+  int idx = (int)random(cs.length);
   float a, w, h, amp, t;
 
   noiseSeed(3701);
 
-  for ( int i = 0; i < 200; i++ ) {
+  for ( int i = 0; i < 160; i++ ) {
     a = 1;
     w = x + random(-120, 120);
     h = y + random(-120, 120);
     amp = random(10);
     for ( int j = 0; j < 100; j++ ) {
-      stroke(c, a);
+      stroke(cs[idx], a);
       point(w, h); 
       t = 10 * noise(w/width, h/height); 
       a += random(4, 8);
@@ -117,7 +118,7 @@ void windsock(float x, float y, float d, color c) {
     }
   }
 
-  deccircle(x, y, d, c);
+  deccircle(x, y, d, cs[(int)random(cs.length)]);
 
   return;
 }
@@ -127,12 +128,13 @@ void deccircle(float x, float y, float r, color c) {
 
   float mr; 
 
+  blendMode(BLEND);
   noStroke(); 
-  fill(c, 5); 
 
-  for ( int i = 0; i < 50; i++ ) {
+  for ( int i = 0; i < 40; i++ ) {
     mr = random(10, r/4); 
     while ( r > mr ) {
+      fill(c, 3); 
       circle(x, y, 2*r); 
       x += random(-1, 1); 
       y += random(-1, 1); 
