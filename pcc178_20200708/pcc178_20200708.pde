@@ -10,42 +10,33 @@ final color[] cs = {
   color(140, 110,  96), 
   color( 92,  63,  42)
 };
-final float len = 38, dw = 3 * len, dh = sqrt(3)/2 * len;
+final float len = 42, dw = 3 * len, dh = sqrt(3)/2 * len;
 
 
 void setup() {
-  size(1000, 1000);
+  size(1150, 800);
   noLoop();
+  strokeCap(PROJECT);
 }
 
 
 void draw() {
   background(220, 209, 185);
 
-  translate(width/2, height/2);
-  rotate(PI/64);
-  translate(-width/2, -height/2);
-
   int c = 0;
-  for ( float h = -len; h < height+len; h += dh ) {
+  for ( float h = 0; h < height+len; h += dh ) {
     for ( float w = getStartW(c); w < width+len; w += dw ) {
       setColor();
       if ( random(20) < 1 ) {
-        if ( random(3) < 1 ) {
-          dechexagon(w, h);
-        } else {
-          hexagon(w, h, 0.8*len);
-        }
+        hexagon(w, h, 0.85*len);
       } else {
-        if ( random(4) < 1 ) {
-          edgedHexaflake(w, h, len, 3);
-        } else {
-          hexaflake(w, h, len, 3);
-        }
+        edgedHexaflake(w, h, len, 3);
       }
     }
     c++;
   }
+
+  cloud();
 }
 
 
@@ -66,20 +57,29 @@ void setColor() {
 void edgedHexaflake(float x, float y, float l, int n) {
 
   final float dt = TWO_PI / 6;  
-  float il = 0.95 * l;
+  float il = 0.98 * l;
 
   hexaflake(x, y, l, n);
 
-  strokeWeight(4);
-  for ( float t = 0; t < TWO_PI; t += dt ) {
-    if ( random(4) < 1 ) {
-      stroke(cs[(int)random(cs.length)]);
+  strokeWeight(2);
+  for ( float t = PI; t <= TWO_PI-dt; t += dt ) {
+    if ( isDiffColor(x, y, sqrt(3)*l, t+dt/2) ) {
+      stroke(59, 252, 193);
       line(x+il*cos(t), y+il*sin(t), x+il*cos(t+dt), y+il*sin(t+dt));
     }
   }
   strokeWeight(1);
 
   return ;
+}
+
+
+boolean isDiffColor(float x, float y, float l, float t) {
+
+  color tc = get((int)x, (int)y);
+  color nc = get((int)(x+l*cos(t)), (int)(y+l*sin(t)));
+
+  return tc != nc;
 }
 
 
@@ -118,6 +118,25 @@ void dechexagon(float x, float y) {
   for ( float l = 0; l < 3*len; l++ ) {
     fill(c, 6);
     hexagon(x, y, l);
+  }
+
+  return ;
+}
+
+
+void cloud() {
+
+  strokeWeight(2.5);
+  for ( float h = 0; h < height; h++ ) {
+    for ( float w = 0; w < width; w++ ) {
+      stroke(
+        map(noise(w/200, h/300), 0, 1, 130, 200), 
+        map(noise(w/400, h/300), 0, 1, 140, 220), 
+        map(noise(w/300, h/500), 0, 1, 120, 200), 
+        30
+      );
+      point(w, h);
+    }
   }
 
   return ;
